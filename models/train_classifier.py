@@ -25,15 +25,32 @@ from sklearn.metrics import classification_report
 import pickle
 
 def load_data(database_filepath):
-    pass
+    engine = create_engine('sqlite:///' + database_filepath)
+    df = pd.read_sql_table('Messages', engine)
+    X = df['message']
+    Y = df[df.columns[4:]]
+    category_names = df.columns[4:]
+    return X, Y, category_names
 
 
 def tokenize(text):
-    pass
+    text = text.lower()
+    text = re.sub(r"[^a-zA-Z0-9]", " ", text)
+    tokens = word_tokenize(text)
+    lemmatizer = WordNetLemmatizer()
+    tokens = [t for t in tokens if t not in stopwords.words("english")]
+    tokens = [lemmatizer.lemmatize(t) for t in tokens]
+    return tokens
 
 
 def build_model():
-    pass
+    pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', MultiOutputClassifier(RandomForestClassifier()))
+    ])
+    
+    
 
 
 def evaluate_model(model, X_test, Y_test, category_names):

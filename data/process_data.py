@@ -8,6 +8,9 @@ def load_data(messages_filepath, categories_filepath):
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     
+    return messages, categories
+
+def clean_data(messages, categories):
     # split dataframe into 36 individual category columns
     categories = categories['categories'].str.split(pat=';', expand=True)
     
@@ -32,10 +35,7 @@ def load_data(messages_filepath, categories_filepath):
     # concatenate the 'messages' dataframe and the 'categories' dataframe to create the final dataframe
     df = messages
     df = pd.concat([df, categories], axis=1)
-    return df
-
-
-def clean_data(df):
+    
     # drop duplicates
     df = df.drop_duplicates()
     return df
@@ -56,10 +56,10 @@ def main():
 
         print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
               .format(messages_filepath, categories_filepath))
-        df = load_data(messages_filepath, categories_filepath)
+        messages, categories = load_data(messages_filepath, categories_filepath)
 
         print('Cleaning data...')
-        df = clean_data(df)
+        df = clean_data(messages, categories)
         
         print('Saving data...\n    DATABASE: {}'.format(database_filepath))
         save_data(df, database_filepath)

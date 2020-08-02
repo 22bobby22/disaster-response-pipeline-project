@@ -17,6 +17,7 @@ from nltk.stem.wordnet import WordNetLemmatizer
 import sklearn
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.multioutput import MultiOutputClassifier
@@ -50,16 +51,28 @@ def build_model():
         ('clf', MultiOutputClassifier(RandomForestClassifier()))
     ])
     
+    parameters = {
+        'clf__estimator__n_estimators': [20], #[10, 20]
+        'clf__estimator__max_depth': [None], #[2, None]
+        'clf__estimator__min_samples_leaf': [1] #[1, 5, 10]
+    }
+
+    cv = GridSearchCV(pipeline, param_grid=parameters, n_jobs=4, verbose=2)
+    
+    return cv
     
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    pass
+    Y_pred = model.predict(X_test)
+    
+    for i in range(Y_pred.shape[1]):
+        print(classification_report(np.array(Y_test)[i,:], Y_pred[i,:]))
 
 
 def save_model(model, model_filepath):
-    pass
-
+    pickle.dump(model, open(model_filepath, 'wb'))
+    
 
 def main():
     if len(sys.argv) == 3:

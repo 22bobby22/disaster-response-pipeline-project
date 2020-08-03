@@ -1,6 +1,7 @@
 import json
 import plotly
 import pandas as pd
+import numpy as np
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -39,12 +40,26 @@ model = joblib.load("/home/workspace/models/classifier.pkl")
 def index():
     
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    # count of messages for each category
+    category_names = list(df.columns[4:])
+    category_counts = {}
+    for column in category_names:
+        category_counts[column] = np.sum(df[column])
+    
+    # get the top 5 categories with more messages
+    category_counts_sorted = sorted(category_counts.items(), key=lambda item: item[1], reverse=True)
+    top_categories = category_counts_sorted[:5]
+    
+    top_categories_names = []
+    top_categories_counts = []
+    for item in top_categories:
+        top_categories_names.append(item[0])
+        top_categories_counts.append(item[1])
+    
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
         {
             'data': [
@@ -63,8 +78,26 @@ def index():
                     'title': "Genre"
                 }
             }
-        }
-    ]
+        },
+        {
+            'data': [
+                Bar(
+                    x=top_categories_names,
+                    y=top_categories_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Top message categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
+        },
+   ]
     
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]

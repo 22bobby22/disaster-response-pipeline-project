@@ -4,6 +4,17 @@ import sqlalchemy
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    Input:
+        messages_filepath: path of the file with the data related to messages
+        categories_filepath: path of the file with the data related to categories
+        
+    Extracts data from the files provided.
+    
+    Output:
+        messages: dataframe with data related to messages
+        categories: dataframe with data related to categories
+    """
     # load data to dataframes
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
@@ -11,6 +22,16 @@ def load_data(messages_filepath, categories_filepath):
     return messages, categories
 
 def clean_data(messages, categories):
+    """
+    Input:
+        messages: dataframe with data related to messages
+        categories: dataframe with data related to messages
+    
+    Cleans the dataframes provided and creates one dataframe concatenating both dataframes.
+    
+    Output:
+        df: clean dataframe containing the concatenated data from both dataframes
+    """
     # split dataframe into 36 individual category columns
     categories = categories['categories'].str.split(pat=';', expand=True)
     
@@ -42,6 +63,13 @@ def clean_data(messages, categories):
 
 
 def save_data(df, database_filename):
+    """
+    Input:
+        df: dataframe containing all the data of the messages and their categorie
+        database_filename: path of the database used to create the connection
+    
+    Creates the database connection and loads the data from the messages into a table.
+    """
     # create database connection
     engine = create_engine('sqlite:///' + database_filename)
     

@@ -52,15 +52,14 @@ def build_model():
     ])
     
     parameters = {
-        'clf__estimator__n_estimators': [20], #[10, 20]
-        'clf__estimator__max_depth': [None], #[2, None]
-        'clf__estimator__min_samples_leaf': [1] #[1, 5, 10]
+        'clf__estimator__n_estimators': [10, 20],
+        'clf__estimator__max_depth': [2, None],
+        'clf__estimator__min_samples_leaf': [1, 5, 10]
     }
 
     cv = GridSearchCV(pipeline, param_grid=parameters, n_jobs=4, verbose=2)
     
     return cv
-    
 
 
 def evaluate_model(model, X_test, Y_test, category_names):

@@ -59,6 +59,15 @@ def index():
         top_categories_names.append(item[0])
         top_categories_counts.append(item[1])
     
+    # get the top 5 categories with less messages
+    bottom_categories = category_counts_sorted[len(category_counts_sorted)-5:]
+    
+    bottom_categories_names = []
+    bottom_categories_counts = []
+    for item in bottom_categories:
+        bottom_categories_names.append(item[0])
+        bottom_categories_counts.append(item[1])
+    
     # create visuals
     graphs = [
         {
@@ -88,7 +97,25 @@ def index():
             ],
 
             'layout': {
-                'title': 'Top message categories',
+                'title': 'Most common message categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=bottom_categories_names,
+                    y=bottom_categories_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Least common message categories',
                 'yaxis': {
                     'title': "Count"
                 },

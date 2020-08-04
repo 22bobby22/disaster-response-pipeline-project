@@ -8,17 +8,17 @@ There is also a web app that displays visualizations of the data. Additionally, 
 
 ### Files
 
-app/
-	run.py: script that will run the Flask web app.
+1. app/
+    - run.py: script that will run the Flask web app.
 
-data/
-	DisasterResponse.db: database created by the ETL script.
-	disaster_categories.csv: dataset containing the data of the disaster categories.
-	disaster_messages.csv: dataset containing the data of the disaster messages.
-	process_data.py: ETL script.
+2. data/
+    - DisasterResponse.db: database created by the ETL script.
+    - disaster_categories.csv: dataset containing the data of the disaster categories.
+    - disaster_messages.csv: dataset containing the data of the disaster messages.
+    - process_data.py: ETL script.
 
-models/
-	train_classifier.py: this script will create and train the model.
+3. models/
+    - train_classifier.py: this script will create and train the model.
 
 
 ### Instructions:
@@ -38,6 +38,6 @@ models/
 
 ### Web App Screenshots
 
-![Web App Screenshot 1](/screenshots/webapp_screenshot_1.png?raw=true "Optional Title")
+![Web App Screenshot 1](/screenshots/webapp_screenshot_1.png?raw=true)
 
-![Web App Screenshot 2](/screeshots/webapp_screenshot_2.png?raw=true "Optional Title")
+![Web App Screenshot 2](/screenshots/webapp_screenshot_2.png?raw=true)

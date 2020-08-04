@@ -1,12 +1,12 @@
 # Disaster Response Pipeline Project
 
-###Summary
+### Summary
 
 This project extracts data from two datasets, one contains disaster messages while the other one contains disaster categories. Then this data is transformed so it is easier to analyze and load into a database. The database is used to train a model that will be able to predict the categories of the messages.
 
 There is also a web app that displays visualizations of the data. Additionally, the web app can be used to input a message that the model will analyze to predict its categories and show the classification results. 
 
-###Files
+### Files
 
 app/
 	run.py: script that will run the Flask web app.
@@ -36,8 +36,8 @@ models/
 3. Go to http://0.0.0.0:3001/
 
 
-###Web App Screenshots
+### Web App Screenshots
 
-![Web App Screenshot 1](/screenshots/webapp_screenshot_1?raw=true "Optional Title")
+![Web App Screenshot 1](/screenshots/webapp_screenshot_1.png?raw=true "Optional Title")
 
-![Web App Screenshot 2](/screeshots/webapp_screenshot_2?raw=true "Optional Title")
+![Web App Screenshot 2](/screeshots/webapp_screenshot_2.png?raw=true "Optional Title")
